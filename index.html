@@ -15,6 +15,7 @@
     <br><br>
     <button onclick="incrementerScore()">+1</button>
     <button onclick="sendScore()">Envoyer Score</button>
+    <a href='https://tirdanslemile.github.io/quizz-app/quiz'>Démarrer</a>
 
     <script>
         let score = 0;
@@ -22,7 +23,6 @@
             score++;
             document.getElementById("score").innerText = score;
         }
-
         function sendScore() {
             let nom = document.getElementById("nom").value;
             let url = "https://script.google.com/macros/s/AKfycbxnQBBtR6CfGII54eAS9yZmpSzLUZvY-LnTsSPv4Ikgh9cdpfP06g_q3BGLlW88JAgB/exec";
@@ -31,7 +31,6 @@
                 alert("Entrez votre nom !");
                 return;
             }
-
             fetch(url, {
                 method: "POST",
                 mode: "no-cors",
