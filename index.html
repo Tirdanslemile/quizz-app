@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+</head>
+<body>
+    <h2>Quiz</h2>
+    <label>Nom :</label>
+    <input id="nom" type="text" placeholder="Votre nom">
+    <br><br>
+    <label>Score :</label>
+    <span id="score">0</span>
+    <br><br>
+    <button onclick="incrementerScore()">+1</button>
+    <button onclick="sendScore()">Envoyer Score</button>
+
+    <script>
+        let score = 0;
+        function incrementerScore() {
+            score++;
+            document.getElementById("score").innerText = score;
+        }
+
+        function sendScore() {
+            let nom = document.getElementById("nom").value;
+            let url = "https://script.google.com/macros/s/AKfycbxnQBBtR6CfGII54eAS9yZmpSzLUZvY-LnTsSPv4Ikgh9cdpfP06g_q3BGLlW88JAgB/exec";
+
+            if (nom === "") {
+                alert("Entrez votre nom !");
+                return;
+            }
+
+            fetch(url, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nom: nom, score: score })
+            })
+            .then(() => alert("Score envoyé !"))
+            .catch(error => console.error("Erreur :", error));
+        }
+    </script>
+</body>
+</html>
