@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        /* Ajouter un peu de style pour rendre l'interface propre */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .question {
+            margin: 20px;
+        }
+        .answers button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Quiz</h2>
+    <div id="quiz">
+        <div id="question" class="question"></div>
+        <div id="answers" class="answers"></div>
+        <button id="next" style="display: none;" onclick="nextQuestion()">Suivant</button>
+    </div>
+    <div id="score">
+        <p>Score : <span id="currentScore">0</span></p>
+    </div>
+    
+    <script>
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Charger les questions depuis le serveur (Google Apps Script)
+        fetch('URL_GOOGLE_APPS_SCRIPT')  // Remplace par ton URL Apps Script
+            .then(response => response.json())
+            .then(data => {
+                questions = data;
+                displayQuestion();
+            })
+            .catch(error => console.error('Erreur de chargement des questions:', error));
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question').innerText = question.question;
+
+            const answersDiv = document.getElementById('answers');
+            answersDiv.innerHTML = '';
+            question.answers.forEach((answer, index) => {
+                let button = document.createElement('button');
+                button.innerText = answer;
+                button.onclick = () => checkAnswer(index);
+                answersDiv.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const question = questions[currentQuestionIndex];
+            const correctIndex = ['A', 'B', 'C', 'D'].indexOf(question.correctAnswer);
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                document.getElementById('currentScore').innerText = score;
+            }
+
+            // Afficher le bouton suivant
+            document.getElementById('next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+                document.getElementById('next').style.display = 'none';
+            } else {
+                alert('Quiz terminé !');
+            }
+        }
+    </script>
+</body>
+</html>
