@@ -37,7 +37,7 @@
         let currentQuestionIndex = 0;
         let score = 0;
 
-        fetch('https://script.google.com/macros/s/AKfycbxnQBBtR6CfGII54eAS9yZmpSzLUZvY-LnTsSPv4Ikgh9cdpfP06g_q3BGLlW88JAgB/exec')  // Remplace par ton URL Apps Script
+        fetch('https://script.google.com/macros/s/AKfycbxnQBBtR6CfGII54eAS9yZmpSzLUZvY-LnTsSPv4Ikgh9cdpfP06g_q3BGLlW88JAgB/exec?action=getQuestions')  // Remplace par ton URL Apps Script
             .then(response => response.json())
             .then(data => {
                 console.log(data);  // Affiche les données récupérées
